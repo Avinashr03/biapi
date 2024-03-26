@@ -34,12 +34,16 @@ app.get('/collection_data', async (req, res) => {
         const total_count = await db.collection('videogame_sales').estimatedDocumentCount();
 
         // Calculate range for retrieval based on the current value of i
-        const chunk_size = Math.floor(total_count / (i % 50));
+        const chunk_size = 1000;
         const start_index = chunk_size * (i - 1);
+        if(start_index + chunk_size > total_count) {
+            i = 1;
+        }
+
         const end_index = Math.min(chunk_size * i, total_count);
 
         // Retrieve data from the collection within the specified range
-        const collection_data = await db.collection('videogame_sales').find({}, { projection: { _id: 0 } }).skip(start_index).limit(end_index - start_index).toArray();
+        const collection_data = await db.collection('videogame_sales').find({}, { projection: { _id: 0 } }).skip(start_index).limit(chunk_size).toArray();
 
         // Increment the global variable i for the next API call
         i++;
