@@ -17,7 +17,7 @@ let db;
 client.connect()
     .then(() => {
         console.log("Connected to MongoDB");
-        db = client.db('video_sales');
+        db = client.db('Walmart');
     })
     .catch(err => console.error("Error connecting to MongoDB:", err));
 
@@ -31,7 +31,7 @@ let i = 1;
 app.get('/collection_data', async (req, res) => {
     try {
         // Retrieve total count of documents in the collection
-        const total_count = await db.collection('videogame_sales').estimatedDocumentCount();
+        const total_count = await db.collection('Walmart_sales').estimatedDocumentCount();
 
         // Calculate range for retrieval based on the current value of i
         const chunk_size = 1000;
@@ -43,7 +43,7 @@ app.get('/collection_data', async (req, res) => {
         const end_index = Math.min(chunk_size * i, total_count);
 
         // Retrieve data from the collection within the specified range
-        const collection_data = await db.collection('videogame_sales').find({}, { projection: { _id: 0 } }).skip(start_index).limit(chunk_size).toArray();
+        const collection_data = await db.collection('Walmart_sales').find({}, { projection: { _id: 0 } }).skip(start_index).limit(chunk_size).toArray();
 
         // Increment the global variable i for the next API call
         i++;
