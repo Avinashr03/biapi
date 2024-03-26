@@ -17,7 +17,7 @@ let db;
 client.connect()
     .then(() => {
         console.log("Connected to MongoDB");
-        db = client.db('video_sales');
+        db = client.db('Amazon');
     })
     .catch(err => console.error("Error connecting to MongoDB:", err));
 
@@ -43,7 +43,7 @@ app.get('/collection_data', async (req, res) => {
         const end_index = Math.min(chunk_size * i, total_count);
 
         // Retrieve data from the collection within the specified range
-        const collection_data = await db.collection('videogame_sales').find({}, { projection: { _id: 0 } }).skip(start_index).limit(chunk_size).toArray();
+        const collection_data = await db.collection('Amazon_sales').find({}, { projection: { _id: 0 } }).skip(start_index).limit(chunk_size).toArray();
 
         // Increment the global variable i for the next API call
         i++;
