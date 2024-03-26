@@ -1,4 +1,5 @@
 from flask import Flask, jsonify
+from flask_cors import CORS
 from pymongo import MongoClient
 from dotenv import load_dotenv
 import os
@@ -14,6 +15,8 @@ db = client['video_sales']
 collection_name = 'videogame_sales'  # Replace 'your_collection_name' with the name of your collection
 
 app = Flask(__name__)
+
+CORS(app)
 
 
 i = 1
